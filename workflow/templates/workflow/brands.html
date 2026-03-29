@@ -1,0 +1,51 @@
+{% extends "workflow/base.html" %}
+{% block title %}Compatible brands — Cam Connect{% endblock %}
+{% block content %}
+<div class="card">
+  <h2>Brand selection &amp; compatibility</h2>
+  {% if selected_count %}
+  <p>
+    Based on <strong>{{ selected_count }}</strong> selected requirement{{ selected_count|pluralize }},
+    the engine shows brands that match. <strong>Fully compatible</strong> means every requirement is covered
+    natively or via an approved bridge path in this demo model.
+  </p>
+  {% else %}
+  <p class="hint">No features selected yet — all brands are listed. Go back to <a href="{% url 'features' %}">features</a> to narrow results.</p>
+  {% endif %}
+</div>
+
+{% if brands %}
+<form method="get" action="{% url 'dashboard' %}">
+  <div class="brand-grid">
+    {% for b in brands %}
+    <div class="brand-card">
+      <h3>{{ b.name }}</h3>
+      <p class="brand-meta">
+        {% if b.total_selected %}
+        <span class="badge {% if b.level == 'full' %}badge-full{% elif b.level == 'bridge' %}badge-bridge{% else %}badge-partial{% endif %}">
+          {% if b.level == 'full' %}Fully compatible{% elif b.level == 'bridge' %}Requires bridge{% else %}Partial support{% endif %}
+        </span>
+        · {{ b.matched }}/{{ b.total_selected }} requirements
+        {% else %}
+        <span class="badge badge-full">Available</span>
+        {% endif %}
+      </p>
+      <label style="font-size:0.9rem;display:flex;align-items:center;gap:0.4rem;cursor:pointer;">
+        <input type="checkbox" name="pick" value="{{ b.slug }}">
+        Include in dashboard preview
+      </label>
+    </div>
+    {% endfor %}
+  </div>
+  <div class="btn-row">
+    <button type="submit" class="btn btn-primary">Preview unified dashboard</button>
+    <a class="btn btn-secondary" href="{% url 'features' %}">Adjust features</a>
+  </div>
+</form>
+{% else %}
+<div class="empty-state">
+  <p><strong>No brands match</strong> your current selection with enough overlap.</p>
+  <p><a href="{% url 'features' %}">Reduce or change features</a> and try again.</p>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Cam Connect{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <header class="site-header">
+    <h1>Cam Connect</h1>
+    <p>Unified multi-brand cameras with AI — compatibility engine &amp; dashboard preview</p>
+  </header>
+  <nav class="step-nav" aria-label="Workflow steps">
+    <a href="{% url 'welcome' %}" {% if active == 'welcome' %}aria-current="page"{% endif %}>1 · Welcome</a>
+    <a href="{% url 'features' %}" {% if active == 'features' %}aria-current="page"{% endif %}>2 · Features</a>
+    <a href="{% url 'brands' %}" {% if active == 'brands' %}aria-current="page"{% endif %}>3 · Brands</a>
+    <a href="{% url 'dashboard' %}" {% if active == 'dashboard' %}aria-current="page"{% endif %}>4 · Dashboard</a>
+    <span class="muted"><a href="{% url 'reset' %}">Reset session</a></span>
+  </nav>
+  <main class="wrap">
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

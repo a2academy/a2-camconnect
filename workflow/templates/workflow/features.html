@@ -1,0 +1,33 @@
+{% extends "workflow/base.html" %}
+{% block title %}Feature overview — Cam Connect{% endblock %}
+{% block content %}
+<div class="card">
+  <h2>Full feature overview</h2>
+  <p>
+    Toggle the camera capabilities you care about. The compatibility engine uses your selection to filter
+    manufacturers on the next step. Categories follow the Cam Connect specification: video, night vision, AI,
+    motion, storage, connectivity, audio, smart home, performance, and privacy.
+  </p>
+</div>
+
+<form method="post" action="{% url 'features' %}">
+  {% csrf_token %}
+  {% for title, feats in feature_groups %}
+  <div class="card feature-section">
+    <h3>{{ title }}</h3>
+    <div class="feature-grid">
+      {% for f in feats %}
+      <label>
+        <input type="checkbox" name="feature" value="{{ f.slug }}" {% if f.slug in selected %}checked{% endif %}>
+        <span>{{ f.label }}</span>
+      </label>
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+  <div class="btn-row">
+    <button type="submit" class="btn btn-primary">View compatible brands</button>
+    <a class="btn btn-secondary" href="{% url 'welcome' %}">Back</a>
+  </div>
+</form>
+{% endblock %}

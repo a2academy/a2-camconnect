@@ -1,0 +1,67 @@
+{% extends "workflow/base.html" %}
+{% block title %}Unified dashboard — Cam Connect{% endblock %}
+{% block content %}
+<div class="card">
+  <h2>Unified multi-brand dashboard preview</h2>
+  <p>
+    This step shows how feeds, alerts, AI overlays, and controls could appear in a single pane of glass.
+    Latency, storage, and edge AI options depend on your chosen brands and features.
+  </p>
+  {% if selected_count %}
+  <p class="hint"><strong>{{ selected_count }}</strong> feature requirement{{ selected_count|pluralize }} in your build.</p>
+  {% endif %}
+</div>
+
+<div class="dash-grid">
+  <div class="card" style="margin:0;">
+    <h2 style="margin-top:0;font-size:1rem;">Multi-camera grid</h2>
+    <div class="feed-panel">
+      {% if picked_labels %}
+        {% for label in picked_labels %}
+        <div class="feed-cell">{{ label }}</div>
+        {% endfor %}
+        {% widthratio picked_labels|length|add:0 1 1 as _n %}
+      {% else %}
+        <div class="feed-cell">Front door · mixed brand</div>
+        <div class="feed-cell">Driveway · ONVIF</div>
+        <div class="feed-cell">Back yard · AI</div>
+        <div class="feed-cell">Garage · night vision</div>
+      {% endif %}
+    </div>
+  </div>
+  <div class="side-stack">
+    <div class="mini">
+      <h4>Smart alerts</h4>
+      <ul class="compact">
+        <li>Person at zone “porch”</li>
+        <li>Vehicle · driveway</li>
+        <li>Package delivered</li>
+      </ul>
+    </div>
+    <div class="mini">
+      <h4>Recording timeline</h4>
+      <p style="margin:0;font-size:0.85rem;">Event-based + continuous hybrid; retention per your storage policy.</p>
+    </div>
+    <div class="mini">
+      <h4>Integrations</h4>
+      <p style="margin:0;font-size:0.85rem;">RTSP / ONVIF, webhooks, MQTT, and smart home links when supported by selected brands.</p>
+    </div>
+    <div class="mini">
+      <h4>Edge AI</h4>
+      <p style="margin:0;font-size:0.85rem;">Overlays and classification run on-device or NVR when hardware supports it.</p>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Confirm configuration</h2>
+  <p class="hint">
+    This prototype does not persist devices. In a full product you would export credentials, stream URLs, and
+    retention policies here.
+  </p>
+  <div class="btn-row">
+    <a class="btn btn-primary" href="{% url 'welcome' %}">Finish &amp; return home</a>
+    <a class="btn btn-secondary" href="{% url 'brands' %}">Back to brands</a>
+  </div>
+</div>
+{% endblock %}

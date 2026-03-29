@@ -1,0 +1,22 @@
+{% extends "workflow/base.html" %}
+{% block title %}Welcome — Cam Connect{% endblock %}
+{% block content %}
+<div class="card">
+  <h2>Welcome to Cam Connect</h2>
+  <p>
+    Cam Connect helps you design a <strong>unified multi-brand camera system</strong> using a
+    compatibility engine that matches your requirements to manufacturers and protocols.
+  </p>
+  <p class="hint">You will: select features → see compatible brands in real time → preview a unified dashboard.</p>
+  <div class="grid-icons" aria-hidden="true">
+    <div class="icon-tile"><span>🧠</span>AI features</div>
+    <div class="icon-tile"><span>🏷</span>Brands</div>
+    <div class="icon-tile"><span>✓</span>Compatibility</div>
+    <div class="icon-tile"><span>🎛</span>Unified control</div>
+  </div>
+  <div class="btn-row">
+    <a class="btn btn-primary" href="{% url 'features' %}">Start Builder</a>
+    <a class="btn btn-secondary" href="{% url 'features' %}">Skip intro</a>
+  </div>
+</div>
+{% endblock %}
